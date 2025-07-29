@@ -83,6 +83,17 @@
             color: var(--primary-color);
         }
 
+        /* Botón de hamburguesa */
+        .menu-toggle {
+            display: none; /* Oculto por defecto en escritorio */
+            background: none;
+            border: none;
+            font-size: 1.8em;
+            color: var(--light-text);
+            cursor: pointer;
+            z-index: 11; /* Por encima de los links en móvil si están abiertos */
+        }
+
         /* --- Hero Video Section --- */
         .hero-video {
             position: relative;
@@ -95,6 +106,15 @@
             background-color: #000;
             text-align: center;
         }
+        /* Contenedor para los videos para la transición */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
         .hero-video video {
             min-width: 100%;
             min-height: 100%;
@@ -106,7 +126,13 @@
             transform: translate(-50%, -50%);
             z-index: 1;
             object-fit: cover;
+            opacity: 0; /* Oculto por defecto, JS lo controlará */
+            transition: opacity 1s ease-in-out; /* Transición de fundido */
         }
+        .hero-video video.active {
+            opacity: 1; /* Video activo */
+        }
+
         .hero-video-overlay {
             position: absolute;
             top: 0;
@@ -284,18 +310,40 @@
             .service-item h3 .fas, .service-item h3 .fab {
                 font-size: 1.2em;
             }
-            .navbar {
-                flex-direction: column;
-                padding: 15px;
+
+            /* Navbar Responsive */
+            .menu-toggle {
+                display: block; /* Muestra el botón de hamburguesa */
             }
+
             .nav-links {
-                margin-top: 15px;
-                flex-wrap: wrap; /* Permite que los links de navegación se envuelvan */
-                justify-content: center;
+                display: none; /* Oculta los enlaces por defecto */
+                flex-direction: column; /* Apila los enlaces verticalmente */
+                width: 100%;
+                background-color: var(--secondary-color); /* Fondo para el menú desplegado */
+                position: absolute;
+                top: 70px; /* Debajo del header */
+                left: 0;
+                padding: 20px 0;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                transition: all 0.3s ease-in-out;
             }
+
+            .nav-links.active {
+                display: flex; /* Muestra los enlaces cuando la clase 'active' está presente */
+            }
+
             .nav-links li {
-                margin: 0 15px 10px 15px; /* Espacio entre links en móvil */
+                margin: 10px 0; /* Espacio vertical entre enlaces */
+                text-align: center;
             }
+
+            .nav-links a {
+                padding: 10px 20px;
+                display: block; /* Hace que el área clicable sea más grande */
+                color: var(--light-text);
+            }
+
             .whatsapp-float {
                 bottom: 20px;
                 right: 20px;
@@ -337,6 +385,9 @@
     <header class="main-header">
         <nav class="navbar">
             <a href="#" class="logo">Mitz</a>
+            <button class="menu-toggle" aria-label="Abrir menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
             <ul class="nav-links">
                 <li><a href="#servicios">Servicios</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
@@ -346,10 +397,15 @@
     </header>
 
     <div class="hero-video">
-        <video autoplay loop muted playsinline>
-            <source src="videos/12307040_1920_1080_60fps.mp4" type="video/mp4">
-            Tu navegador no soporta el tag de video.
-        </video>
+        <div class="video-container">
+            <video id="video1" class="hero-background-video active" autoplay muted playsinline>
+                <source src="videos/12307040_1920_1080_60fps.mp4" type="video/mp4">
+                Tu navegador no soporta el tag de video.
+            </video>
+            <video id="video2" class="hero-background-video" muted playsinline>
+                <source src="videos/video 2.mp4" type="video/mp4"> Tu navegador no soporta el tag de video.
+            </video>
+        </div>
         <div class="hero-video-overlay"></div>
         <div class="hero-content">
             <h1>Mitz</h1>
@@ -403,6 +459,59 @@
     <a href="https://wa.me/1137837227" class="whatsapp-float" target="_blank" aria-label="Enviar mensaje de WhatsApp a Mitz">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <script>
+        // JavaScript para el menú hamburguesa
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+
+                // Cierra el menú al hacer clic en un enlace (útil en móviles)
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+
+            // JavaScript para la secuencia de videos
+            const video1 = document.getElementById('video1');
+            const video2 = document.getElementById('video2');
+            const videos = [video1, video2];
+            let currentVideoIndex = 0;
+
+            function playNextVideo() {
+                // Pausar el video actual y quitar la clase 'active'
+                videos[currentVideoIndex].classList.remove('active');
+                videos[currentVideoIndex].pause();
+
+                // Calcular el índice del siguiente video
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+
+                // Añadir la clase 'active' al siguiente video y reproducirlo
+                videos[currentVideoIndex].classList.add('active');
+                videos[currentVideoIndex].play();
+            }
+
+            // Iniciar el primer video al cargar la página
+            video1.addEventListener('canplaythrough', () => {
+                video1.play();
+            }, { once: true }); // Solo se ejecuta una vez
+
+            // Escuchar el evento 'ended' de cada video para reproducir el siguiente
+            videos.forEach(video => {
+                video.addEventListener('ended', playNextVideo);
+            });
+
+            // Asegurar que el primer video esté visible al inicio
+            video1.classList.add('active');
+        });
+    </script>
 
 </body>
 </html>
