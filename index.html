@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitz - Consultoría en Higiene y Seguridad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Definición de variables CSS para colores */
+        :root {
+            --primary-color: #3498db; /* Azul vibrante */
+            --secondary-color: #2c3e50; /* Azul oscuro para fondos/texto */
+            --accent-color: #e74c3c; /* Rojo para acentos o advertencias */
+            --light-bg: #f5f8fa; /* Fondo claro para secciones */
+            --text-color: #333; /* Color de texto general */
+            --light-text: #ecf0f1; /* Texto claro sobre fondos oscuros */
+            --whatsapp-color: #25D366; /* Verde de WhatsApp */
+        }
+
+        /* Estilos generales */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--secondary-color);
+            line-height: 1.2;
+        }
+
+        /* --- Header y Navegación --- */
+        .main-header {
+            background-color: var(--secondary-color);
+            padding: 15px 0;
+            position: absolute; /* Para que quede sobre el video */
+            width: 100%;
+            z-index: 10; /* Asegura que esté por encima del video */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: var(--light-text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Hero Video Section --- */
+        .hero-video {
+            position: relative;
+            width: 100%;
+            height: 70vh; /* Aumenta la altura del video para más impacto */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            text-align: center;
+        }
+        .hero-video video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            object-fit: cover;
+        }
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Un poco más oscuro para que el texto resalte */
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: var(--light-text);
+            padding: 20px;
+        }
+        .hero-content h1 {
+            font-size: 3.8em; /* Tamaño más grande para el título principal */
+            margin-bottom: 15px;
+            color: var(--light-text); /* Asegura que el título sea blanco */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Sombra para el texto */
+        }
+        .hero-content p {
+            font-size: 1.4em; /* Texto de impacto */
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            font-weight: 400;
+        }
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9; /* Tono más oscuro de primary-color */
+            transform: translateY(-3px);
+        }
+
+        /* --- Secciones de Contenido --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 60px auto; /* Más espacio arriba y abajo */
+            padding: 20px 0; /* Padding horizontal para el contenedor */
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3em; /* Títulos de sección más grandes */
+            margin-bottom: 50px; /* Más espacio después del título */
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Grid de Servicios --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px; /* Más espacio entre los elementos */
+        }
+        .service-item {
+            background-color: #fff; /* Fondo blanco para las tarjetas */
+            border-radius: 10px; /* Bordes más suaves */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+            padding: 40px; /* Más padding interno */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-item:hover {
+            transform: translateY(-15px); /* Desplazamiento más notorio */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Sombra más intensa al hover */
+        }
+        .service-item h3 {
+            color: var(--secondary-color); /* Título del servicio más oscuro */
+            margin-top: 0;
+            font-size: 1.8em; /* Título del servicio más grande */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px; /* Espacio entre icono y texto */
+            margin-bottom: 20px;
+        }
+        .service-item h3 .fas, .service-item h3 .fab {
+            color: var(--primary-color); /* Icono del servicio con color primario */
+            font-size: 1.5em; /* Icono un poco más grande */
+        }
+        .service-item p {
+            font-size: 1.1em; /* Texto del servicio un poco más grande */
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 40px 0; /* Más padding en el footer */
+            margin-top: 80px; /* Más espacio antes del footer */
+        }
+        .social-icons {
+            margin-bottom: 20px; /* Más espacio entre iconos y copyright */
+        }
+        .social-icons a {
+            color: var(--light-text);
+            margin: 0 15px; /* Más espacio entre iconos de redes sociales */
+            font-size: 1.8em; /* Iconos de redes sociales más grandes */
+        }
+        .social-icons a:hover {
+            color: var(--primary-color); /* Color de hover para redes sociales */
+        }
+        footer p {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- Botón Flotante de WhatsApp --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px; /* Distancia desde el borde inferior */
+            right: 30px; /* Distancia desde el borde derecho */
+            background-color: var(--whatsapp-color); /* Color de WhatsApp */
+            color: white;
+            border-radius: 50%; /* Para que sea circular */
+            text-align: center;
+            font-size: 2.5em; /* Tamaño del icono */
+            width: 60px; /* Ancho del botón */
+            height: 60px; /* Alto del botón */
+            line-height: 60px; /* Centra el icono verticalmente */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para que flote */
+            z-index: 100; /* Asegura que esté por encima de todo */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1); /* Efecto de crecimiento al pasar el mouse */
+            background-color: #1DA851; /* Tono un poco más oscuro al hover */
+        }
+        .whatsapp-float i {
+            /* Asegura que el icono dentro del botón de WhatsApp no tenga los estilos de Font Awesome por defecto */
+            color: inherit;
+        }
+
+
+        /* --- Media Queries para Responsive Design --- */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.8em;
+            }
+            .hero-content p {
+                font-size: 1.1em;
+            }
+            .section-title {
+                font-size: 2.2em;
+            }
+            .service-item {
+                padding: 30px;
+            }
+            .service-item h3 {
+                font-size: 1.4em;
+            }
+            .service-item h3 .fas, .service-item h3 .fab {
+                font-size: 1.2em;
+            }
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap; /* Permite que los links de navegación se envuelvan */
+                justify-content: center;
+            }
+            .nav-links li {
+                margin: 0 15px 10px 15px; /* Espacio entre links en móvil */
+            }
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                font-size: 2em;
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-video {
+                height: 50vh;
+            }
+            .hero-content h1 {
+                font-size: 2em;
+            }
+            .hero-content p {
+                font-size: 1em;
+            }
+            .section-title {
+                font-size: 1.8em;
+            }
+            .service-item {
+                padding: 20px;
+            }
+            .service-item h3 {
+                font-size: 1.2em;
+                gap: 10px;
+            }
+            .service-item h3 .fas, .service-item h3 .fab {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar">
+            <a href="#" class="logo">Mitz</a>
+            <ul class="nav-links">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero-video">
+        <video autoplay loop muted playsinline>
+            <source src="videos/12307040_1920_1080_60fps.mp4" type="video/mp4">
+            Tu navegador no soporta el tag de video.
+        </video>
+        <div class="hero-video-overlay"></div>
+        <div class="hero-content">
+            <h1>Mitz</h1>
+            <p>Consultoría experta en Higiene y Seguridad Laboral. Protegiendo a tu equipo, construyendo un futuro seguro.</p>
+            <a href="#servicios" class="btn-primary">Ver Servicios</a>
+        </div>
+    </div>
+
+    <main>
+        <div class="container" id="servicios">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3><i class="fas fa-shield-alt"></i> Evaluación de Riesgos</h3>
+                    <p>Identificación y análisis de peligros, evaluación de riesgos laborales y propuesta de medidas preventivas.</p>
+                </div>
+                <div class="service-item">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Capacitaciones</h3>
+                    <p>Programas de formación personalizados en higiene y seguridad para todo el personal de tu empresa.</p>
+                </div>
+                <div class="service-item">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Planes de Emergencia</h3>
+                    <p>Diseño e implementación de planes de contingencia y evacuación para situaciones de emergencia.</p>
+                </div>
+                <div class="service-item">
+                    <h3><i class="fas fa-clipboard-check"></i> Auditorías y Cumplimiento</h3>
+                    <p>Verificación del cumplimiento de normativas vigentes y asesoramiento para la mejora continua.</p>
+                </div>
+                <div class="service-item">
+                    <h3><i class="fas fa-leaf"></i> Medio Ambiente</h3>
+                    <p>Asesoramiento y gestión en aspectos de higiene y seguridad relacionados con el impacto ambiental.</p>
+                </div>
+                <div class="service-item">
+                    <h3><i class="fas fa-user-nurse"></i> Salud Ocupacional</h3>
+                    <p>Programas para la prevención de enfermedades laborales y promoción de la salud en el lugar de trabajo.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/tupaginaMitz" target="_blank" aria-label="Facebook de Mitz"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com/tuperfilMitz" target="_blank" aria-label="Twitter de Mitz"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/tuempresaMitz" target="_blank" aria-label="LinkedIn de Mitz"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/tuperfilMitz" target="_blank" aria-label="Instagram de Mitz"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2025 Mitz - Consultoría en Higiene y Seguridad. Todos los derechos reservados.</p>
+    </footer>
+
+    <a href="https://wa.me/1137837227" class="whatsapp-float" target="_blank" aria-label="Enviar mensaje de WhatsApp a Mitz">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>
